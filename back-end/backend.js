@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 app.use(cors(origin = '*'));
-const port = 6000;
+const port = 9696;
 
 app.get('/', (req, res) => {
     res.send('Hello World');
