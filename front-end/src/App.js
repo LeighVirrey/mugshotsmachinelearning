@@ -21,7 +21,7 @@ function App() {
         </div>
         <div className="photo-box">
           <div className="image">
-          <img  alt="Felon"></img>
+          <img alt="Felon"></img>
           </div>
           <h3>Felon Info:</h3>
         </div>
