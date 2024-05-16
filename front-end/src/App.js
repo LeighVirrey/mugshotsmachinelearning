@@ -1,8 +1,13 @@
 import './App.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
   const [imgFile, setImgFile] = useState('');
+
+  function handleSubmit() {
+
+  }
 
   return (
     <div className="App">
@@ -18,9 +23,9 @@ function App() {
             <img className="image" alt="Upload"></img>
           </div>
           {/* <button>Upload Your Image</button> */}
-          <form id='image-form'>
+          <form id='image-form' onSubmit={handleSubmit}>
             <input name='image' type="file" />
-            <input type='submit' />
+            <input type='submit' value={"Upload"}/>
           </form>
         </div>
         <div className="btn=box">
