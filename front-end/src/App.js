@@ -19,12 +19,12 @@ function App() {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -42,7 +42,7 @@ function App() {
           </div>
           {/* <button>Upload Your Image</button> */}
           <form id='image-form' onSubmit={handleSubmit}>
-            <input name='image' type="file" accept='.jpg,.jpeg,.png' onChange={handleFileChange}/>
+            <input name='image' type="file" accept='.jpg,.jpeg,.png' onChange={handleFileChange} />
             <input type='submit' value={"Upload"} />
           </form>
         </div>
