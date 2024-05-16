@@ -6,6 +6,7 @@ import express from 'express';
 import cors from 'cors';
 const app = express();
 app.use(cors({origin: '*'}));
+app.use(express.static('./public'));
 const port = 9696;
 let net = null;
 
@@ -19,6 +20,10 @@ app.get('/', async (req, res) => {
     res.send(face);
 
     //This stuff is just for testing, we'll be improving the different end points of the back-end later, I just spent a while doing this.
+})
+
+app.post('/image', async (req, res) => {
+    //PLACEHOLDER
 })
 
 app.listen(port, async () => {
