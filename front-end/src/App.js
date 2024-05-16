@@ -4,13 +4,19 @@ import axios from 'axios';
 
 function App() {
   const [imgFile, setImgFile] = useState('');
+  const [imgPreview, setImgPreview] = useState('');
 
   const handleFileChange = (event) => {
     console.log("Handling file change");
-    setImgFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setImgFile(file);
+    setImgPreview(URL.createObjectURL(file));
   };
 
+  // The URL to send the photo to
   let imageUploadUrl = "http://localhost:9696/upload";
+
+  // This function is run after the user clicks submit
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -38,7 +44,7 @@ function App() {
       <div className="photos">
         <div className="photo-box">
           <div className="image">
-            <img src={imgFile} alt="Upload your photo" />
+            <img id='img-preview' src={imgPreview} alt="Upload your photo" />
           </div>
           {/* <button>Upload Your Image</button> */}
           <form id='image-form' onSubmit={handleSubmit}>
