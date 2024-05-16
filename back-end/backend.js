@@ -13,7 +13,7 @@ let net = null;
 
 app.get('/', async (req, res) => {
     const img = new Image();
-    img.src = fs.readFileSync('public/images/paulfox.jpg');
+    img.src = fs.readFileSync('public/images/robbie.png');
     const canvas = createCanvas(img.width, img.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, img.width, img.height);
