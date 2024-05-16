@@ -5,8 +5,26 @@ import axios from 'axios';
 function App() {
   const [imgFile, setImgFile] = useState('');
 
-  function handleSubmit() {
+  const handleFileChange = (event) => {
+    console.log("Handling file change");
+    setImgFile(event.target.files[0]);
+  };
 
+  let imageUploadUrl = "http://localhost:9696/upload";
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    axios.post(imageUploadUrl, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   return (
@@ -20,12 +38,12 @@ function App() {
       <div className="photos">
         <div className="photo-box">
           <div className="image">
-            <img className="image" alt="Upload"></img>
+            <img src={imgFile} alt="Upload your photo" />
           </div>
           {/* <button>Upload Your Image</button> */}
           <form id='image-form' onSubmit={handleSubmit}>
-            <input name='image' type="file" />
-            <input type='submit' value={"Upload"}/>
+            <input name='image' type="file" accept='.jpg,.jpeg,.png' onChange={handleFileChange}/>
+            <input type='submit' value={"Upload"} />
           </form>
         </div>
         <div className="btn=box">
