@@ -22,11 +22,13 @@ app.get('/', async (req, res) => {
 
     //This stuff is just for testing, we'll be improving the different end points of the back-end later, I just spent a while doing this.
 
-    //NOTE, I found that if a face is not found, then it will just crash. We need to add a check for this later but I'm too lazy to do it now.
+    //NOTE, I found that if the image type is not correct, then it will not be found. We need to add a check for this later but I'm too lazy to do it now.
 })
 
-app.post('/image', async (req, res) => {
-    //PLACEHOLDER
+app.post('/upload', async (req, res) => {
+    //req.body.image = null
+    //DO THIS LATER
+    res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg'});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
 })
 
 app.listen(port, async () => {
