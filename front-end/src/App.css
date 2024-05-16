@@ -1,7 +1,8 @@
-h1{
+h1 {
   color: orange;
 }
-.photos{
+
+.photos {
   display: inline-flex;
   border: solid black 5px;
   border-radius: 5px;
@@ -9,27 +10,35 @@ h1{
   justify-content: space-around;
   text-align: center;
 }
-.photo-box{
-  width:600px;
+
+.photo-box {
+  width: 600px;
   height: 600px;
   background-color: darkgray;
-  margin:5%;
+  margin: 5%;
   text-align: center;
 }
-.image{
-  width:500px;
+
+.image {
+  width: 500px;
   height: 500px;
   margin: 5%;
   border: solid black 5px;
   border-radius: 5px;
   text-align: center;
 }
-.btn-box{
+
+.btn-box {
   display: inline-flex;
   justify-content: space-around;
 
 }
-.btn{
-  height:50px;
- 
+
+.btn {
+  height: 50px;
+}
+
+#img-preview {
+  height: 100%;
+  width: 100%;
 }
