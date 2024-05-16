@@ -1,6 +1,9 @@
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  const [imgFile, setImgFile] = useState('');
+  
   return (
     <div className="App">
       <header className="App-header">
