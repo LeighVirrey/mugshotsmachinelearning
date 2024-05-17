@@ -10,26 +10,27 @@ app.use(cors({origin: '*'}));
 app.use(express.static('./public'));
 const port = 9696;
 let net = null;
+const img = new Image();
 
 app.get('/', async (req, res) => {
-    const img = new Image();
-    img.src = fs.readFileSync('public/images/robbie.png');
-    const canvas = createCanvas(img.width, img.height);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, img.width, img.height);
-    const face = await net.estimateFaces(canvas);
-    res.send(face);
-
-    //This stuff is just for testing, we'll be improving the different end points of the back-end later, I just spent a while doing this.
-
-    //NOTE, I found that if the image type is not correct, then it will not be found. We need to add a check for this later but I'm too lazy to do it now.
+    res.send('hi');
 })
 
 app.post('/upload', async (req, res) => {
-    //req.body.image = null
-    //DO THIS LATER
-    res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg'});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
+    img.src = fs.readFileSync('public/images/paulfox.jpg'); //this would contain whatever image is uploaded, for now it's just a test image
+    let face = await net.estimateFaces(createCanvasFromImage());
+    //we would probably do the math in this section to or a call to another function to do the math so that when we find the most similar mugshot, we can return it to the front end as quick as they called it
+
+
+    res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg', dataTest: face});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
 })
+
+function createCanvasFromImage(){
+    const canvas = createCanvas(img.width, img.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    return canvas;
+}
 
 app.listen(port, async () => {
     console.log(`Server is running on port ${port}`);
