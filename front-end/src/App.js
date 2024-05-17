@@ -1,44 +1,39 @@
 import './App.css';
-import axios from "axios";
-import { useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [state, setState] = useState({selectedFile: null});
-  const [image, setImage] = useState("")
+  const [imgFile, setImgFile] = useState('');
+  const [imgPreview, setImgPreview] = useState('');
 
-  const fileSelectedHandler = event => {
-    setState({selectedFile: event.target.files[0]})
-    // setImage(event.target.files[0])
+  const handleFileChange = (event) => {
+    console.log("Handling file change");
+    const file = event.target.files[0];
+    setImgFile(file);
+    setImgPreview(URL.createObjectURL(file));
+  };
 
-    var fr = new FileReader();
-    fr.onload = function(){
-      setImage(fr.result);
-    }
-    fr.readAsDataURL(event.target.files[0]);
+  // The URL to send the photo to
+  let imageUploadUrl = "http://localhost:9696/upload";
 
-    console.log("Event: ", event.target.files[0])
-  }
-  const fileUploadHandler = () => {
-    const fd = new FormData();
-    console.log(image)
-
-    // Push the image to your back-end
-
-    fd.append('image', state.selectedFile, state.selectedFile.name)
-    let url = "url to my back end";
-
-    axios.post('url',fd, {
-      onUploadProgress: ProgressEvent => { 
-        console.log("Upload Progress: " + Math.round(ProgressEvent.loaded / ProgressEvent.total * 100) + "%")
+  // This function is run after the user clicks submit
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('image', imgFile);
+    console.log(formData.get('image'));
+    
+    axios.post(imageUploadUrl, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
     })
-    .then(res => {
-      // Update the mugshot image for the user
-      // set felon.src = result
-      console.log("Response: ", res)
-    })
-
-
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -51,14 +46,17 @@ function App() {
       </div>
       <div className="photos">
         <div className="photo-box">
-          <div >
-          <img className="image" src={image} alt="Upload"></img>
+          <div className="image">
+            <img id='img-preview' src={imgPreview} alt="Upload your photo" />
           </div>
-          <input type="file" onChange={fileSelectedHandler}/>
-          {/* <button onClick={fileUploadHandler}>Upload</button> */}
+          {/* <button>Upload Your Image</button> */}
+          <form id='image-form' onSubmit={handleSubmit}>
+            <input name='image' type="file" accept='.jpg,.jpeg,.png' onChange={handleFileChange} />
+            <input type='submit' value={"Upload"} />
+          </form>
         </div>
         <div className="btn=box">
-        <button className="btn">Find your Felon look-alike</button>
+          <button className="btn">Find your Felon look-alike</button>
         </div>
         <div className="photo-box">
           <div >
