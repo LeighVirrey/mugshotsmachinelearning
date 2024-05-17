@@ -25,6 +25,10 @@ app.post('/upload', async (req, res) => {
     res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg', dataTest: face});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
 })
 
+app.get('/getImage', async (req, res) => {
+    res.json({image: 'http://localhost:9696/images/robbie.png'})
+})
+
 function createCanvasFromImage(){
     const canvas = createCanvas(img.width, img.height);
     const ctx = canvas.getContext('2d');
@@ -38,3 +42,10 @@ app.listen(port, async () => {
     console.log('Model loaded');
 })
 
+// stuff to get data from Face Landmarks values
+// img.src = fs.readFileSync('public/images/paulfox.jpg');
+// const canvas = createCanvas(img.width, img.height);
+// const ctx = canvas.getContext('2d');
+// ctx.drawImage(img, 0, 0, img.width, img.height);
+// let face = await net.estimateFaces(createCanvasFromImage());
+// the face variable has all the data we need to do the math to find the most similar mugshot
