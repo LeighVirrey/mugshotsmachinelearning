@@ -20,6 +20,9 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
+    formData.append('image', imgFile);
+    console.log(formData.get('image'));
+    
     axios.post(imageUploadUrl, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
