@@ -59,8 +59,8 @@ function App() {
           <button className="btn">Find your Felon look-alike</button>
         </div>
         <div className="photo-box">
-          <div className="image">
-            <img alt="Felon"></img>
+          <div >
+          <img className="image" src="https://www.mugshots.org/post/terry-nunez-mugshot" alt="Felon"></img>
           </div>
           <h3>Felon Info:</h3>
         </div>
