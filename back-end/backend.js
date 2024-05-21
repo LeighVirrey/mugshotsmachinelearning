@@ -16,17 +16,39 @@ app.get('/', async (req, res) => {
     res.send('hi');
 })
 
+let storage = multer.diskStorage({
+    destination : "./public/images",
+    filename: function (req, file, cb) {
+        cb(null, "userPhoto.jpg")
+    }
+})
+
+let upload = multer({ storage: storage }).single('image');
+
 app.post('/upload', async (req, res) => {
-    img.src = fs.readFileSync('public/images/paulfox.jpg'); //this would contain whatever image is uploaded, for now it's just a test image
-    let face = await net.estimateFaces(createCanvasFromImage());
-    //we would probably do the math in this section to or a call to another function to do the math so that when we find the most similar mugshot, we can return it to the front end as quick as they called it
-
-
-    res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg', dataTest: face});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
+    if (fs.existsSync('public/images/userPhoto.jpg')){
+        fs.unlinkSync('public/images/userPhoto.jpg');
+    }
+    upload(req, res, function(err){
+        if (err){
+            return res.send(err);
+        }
+        res.send("File is uploaded");
+    })
+    // img.src = fs.readFileSync('public/images/paulfox.jpg'); //this would contain whatever image is uploaded, for now it's just a test image
+    // let face = await net.estimateFaces(createCanvasFromImage());
+    // res.json({message: 'Image uploaded, Similar image:', image: 'http://localhost:9696/images/paulfox.jpg', dataTest: face});//Replace this later with image that is similar, also do the math, also other stuff, blah blah
 })
 
 app.get('/getImage', async (req, res) => {
-    res.json({image: 'http://localhost:9696/images/robbie.png'})
+    //this is where the big math will be, once the front-end calls for this then we run the comparison math and return an image with the least amount of differences
+    if(fs.existsSync('public/images/userPhoto.jpg')){
+        img.src = fs.readFileSync('public/images/userPhoto.jpg'); //for now, here's the proof of concept that we take the uploaded image and then use it.
+        let face = await net.estimateFaces(createCanvasFromImage());
+        res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face})
+    }else{
+        res.send('No image uploaded, upload an image by calling /upload first');
+    }
 })
 
 function createCanvasFromImage(){
