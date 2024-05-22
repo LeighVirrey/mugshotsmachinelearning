@@ -46,6 +46,16 @@ app.get('/getImage', async (req, res) => {
         img.src = fs.readFileSync('public/images/userPhoto.jpg'); //for now, here's the proof of concept that we take the uploaded image and then use it.
         let face = await net.estimateFaces(createCanvasFromImage());
         res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face})
+
+        //MATH HERE
+        //const mugshots = dal.getAllImages()
+        //for each image, compare face with mugshotData and get its difference
+        //get the image with the smallest difference and then 
+        //res.json({image: element.imageUrl, differenceValue: math})
+        //maybe turn the difference value into a percentage.
+
+
+
     }else{
         res.send('No image uploaded, upload an image by calling /upload first');
     }
