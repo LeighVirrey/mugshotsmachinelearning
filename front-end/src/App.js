@@ -13,10 +13,8 @@ function App() {
     setImgPreview(URL.createObjectURL(file));
   };
 
-  // The URL to send the photo to
-  let imageUploadUrl = "http://localhost:9696/upload";
+  const imageUploadUrl = "http://localhost:9696/upload";
 
-  // This function is run after the user clicks submit
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -39,28 +37,26 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
-      </header>
-      <div>
         <h1>Felon Face Finder</h1>
-      </div>
+      </header>
       <div className="photos">
         <div className="photo-box">
-          <div className="image">
-            <img id='img-preview' src={imgPreview} alt="Upload your photo" />
+          <div className="image-container">
+            <img id="img-preview" src={imgPreview} alt="Upload your photo" />
+            <div className="prison-bars"></div>
           </div>
-          {/* <button>Upload Your Image</button> */}
-          <form id='image-form' onSubmit={handleSubmit}>
-            <input name='image' type="file" accept='.jpg,.jpeg,.png' onChange={handleFileChange} />
-            <input type='submit' value={"Upload"} />
+          <form id="image-form" onSubmit={handleSubmit}>
+            <input name="image" type="file" accept=".jpg,.jpeg,.png" onChange={handleFileChange} />
+            <input type="submit" value="Upload" />
           </form>
         </div>
-        <div className="btn=box">
+        <div className="btn-box">
           <button className="btn">Find your Felon look-alike</button>
         </div>
         <div className="photo-box">
-          <div >
-          <img className="image" src="https://www.mugshots.org/post/terry-nunez-mugshot" alt="Felon"></img>
+          <div className="image-container">
+            <img src="https://www.mugshots.org/post/terry-nunez-mugshot" alt="Felon" />
+            <div className="prison-bars"></div>
           </div>
           <h3>Felon Info:</h3>
         </div>
