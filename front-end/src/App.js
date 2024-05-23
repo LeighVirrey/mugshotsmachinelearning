@@ -14,8 +14,10 @@ function App() {
   };
 
   const imageUploadUrl = "http://localhost:9696/upload";
+  const imageGetUrl = "http://localhost:9696/getImage";
 
   const handleSubmit = (event) => {
+    console.log("Handling submission");
     event.preventDefault();
     const formData = new FormData();
     formData.append('image', imgFile);
@@ -31,6 +33,13 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
+      });
+  }
+
+  function getImage() {
+    axios.get(imageGetUrl)
+      .then((response) => {
+        console.log(response);
       });
   }
 
@@ -51,7 +60,7 @@ function App() {
           </form>
         </div>
         <div className="btn-box">
-          <button className="btn">Find your Felon look-alike</button>
+          <button className="btn" onClick={getImage}>Find your Felon look-alike</button>
         </div>
         <div className="photo-box">
           <div className="image-container">
