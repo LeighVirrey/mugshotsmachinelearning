@@ -46,25 +46,19 @@ app.get('/getImage', async (req, res) => {
         //img.onload = async () => {return};
 
 
-        for (let i = 1; i < 10; i++){
-            img.src = fs.readFileSync(`public/images/mugshot${i}.jpg`);
-            let mugFace = await net.estimateFaces(createCanvasFromImage());
-            console.log (mugFace.annotations);
-        }
+        img.src = fs.readFileSync(`public/images/MG1.jpg`);
+        const mugFace = await net.estimateFaces(createCanvasFromImage());
+        //console.log ( JSON.stringify(mugFace[0].annotations));
+        res.json(mugFace[0].annotations);
+        mugFace[0].annotations.forEach((annotation) => {
+
+        });
+
+
         img.src = fs.readFileSync('public/images/userPhoto.jpg');
         let face = await net.estimateFaces(createCanvasFromImage());
         res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face});
         fs.unlinkSync('public/images/userPhoto.jpg');
-
-        //MATH HERE
-        //const mugshots = dal.getAllImages()
-        //for each image, compare face with mugshotData and get its difference
-        //get the image with the smallest difference and then 
-        //res.json({image: element.imageUrl, differenceValue: math})
-        //maybe turn the difference value into a percentage.
-
-
-        // After everything, delete the original image uploaded by the user
     }else{
         res.send('No image uploaded, upload an image by calling /upload first');
     }
