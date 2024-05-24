@@ -26,7 +26,7 @@ function App() {
     const formData = new FormData();
     formData.append('image', imgFile);
     console.log(formData.get('image'));
-
+    
     // This post sends the form data with the image to the server for calculations to be run
     axios.post(imageUploadUrl, formData, {
       headers: {
