@@ -43,10 +43,18 @@ app.post('/upload', async (req, res) => {
 app.get('/getImage', async (req, res) => {
     //this is where the big math will be, once the front-end calls for this then we run the comparison math and return an image with the least amount of differences
     if(fs.existsSync('public/images/userPhoto.jpg')){
-        img.onload = async () => {return};
+        //img.onload = async () => {return};
+
+
+        for (let i = 1; i < 10; i++){
+            img.src = fs.readFileSync(`public/images/mugshot${i}.jpg`);
+            let mugFace = await net.estimateFaces(createCanvasFromImage());
+            console.log (mugFace.annotations);
+        }
         img.src = fs.readFileSync('public/images/userPhoto.jpg');
         let face = await net.estimateFaces(createCanvasFromImage());
         res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face});
+        fs.unlinkSync('public/images/userPhoto.jpg');
 
         //MATH HERE
         //const mugshots = dal.getAllImages()
@@ -62,10 +70,10 @@ app.get('/getImage', async (req, res) => {
     }
 })
 
-async function createCanvasFromImage(){
-    const canvas = await createCanvas(img.width, img.height);
-    const ctx = await canvas.getContext('2d');
-    await ctx.drawImage(img, 0, 0, img.width, img.height);
+function createCanvasFromImage(){
+    const canvas =  createCanvas(img.width, img.height);
+    const ctx =  canvas.getContext('2d');
+     ctx.drawImage(img, 0, 0, img.width, img.height);
     return canvas;
 }
 
