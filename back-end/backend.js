@@ -93,7 +93,7 @@ function comparisonMath(face1, face2){
     let keyNumbers2 = attemptMath(face2);
     let total1 = keyNumbers1.reduce((a, b) => a + b, 0);
     let total2 = keyNumbers2.reduce((a, b) => a + b, 0);
-    return Math.abs(total1 - total2);
+    return total1 - total2;
 }
 
 function createCanvasFromImage(){
@@ -110,7 +110,7 @@ app.listen(port, async () => {
 
 
     //this is just for math testing, remove this later
-    img.src = fs.readFileSync(`public/images/MG1.jpg`);
+    img.src = fs.readFileSync(`public/images/Mugshots/1.png`);
     const mugFace = await net.estimateFaces(createCanvasFromImage());
     //WackMath(mugFace[0].annotations);
     //attemptMath(mugFace[0].annotations);
