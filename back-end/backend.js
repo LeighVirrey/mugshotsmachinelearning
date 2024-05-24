@@ -49,7 +49,8 @@ app.get('/getImage', async (req, res) => {
         img.src = fs.readFileSync(`public/images/MG1.jpg`);
         const mugFace = await net.estimateFaces(createCanvasFromImage());
         //console.log ( JSON.stringify(mugFace[0].annotations));
-        res.json(mugFace[0].annotations);
+        //res.json(mugFace[0].annotations);
+        res.send(mugFace[0].annotations);
         mugFace[0].annotations.forEach((annotation) => {
 
         });
