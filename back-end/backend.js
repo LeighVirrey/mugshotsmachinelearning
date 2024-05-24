@@ -46,7 +46,7 @@ app.get('/getImage', async (req, res) => {
         img.onload = async () => {return};
         img.src = fs.readFileSync('public/images/userPhoto.jpg');
         let face = await net.estimateFaces(createCanvasFromImage());
-        res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face})
+        res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face});
 
         //MATH HERE
         //const mugshots = dal.getAllImages()
@@ -56,7 +56,7 @@ app.get('/getImage', async (req, res) => {
         //maybe turn the difference value into a percentage.
 
 
-
+        // After everything, delete the original image uploaded by the user
     }else{
         res.send('No image uploaded, upload an image by calling /upload first');
     }
