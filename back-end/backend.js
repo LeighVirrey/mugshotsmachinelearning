@@ -10,7 +10,7 @@ app.use(cors({origin: '*'}));
 app.use(express.static('./public'));
 const port = 9696;
 let net = null;
-const img = new Image();
+let img = new Image();
 
 app.get('/', async (req, res) => {
     res.send('hi');
@@ -43,28 +43,31 @@ app.post('/upload', async (req, res) => {
 app.get('/getImage', async (req, res) => {
     //this is where the big math will be, once the front-end calls for this then we run the comparison math and return an image with the least amount of differences
     if(fs.existsSync('public/images/userPhoto.jpg')){
-        img.src = fs.readFileSync('public/images/userPhoto.jpg'); //for now, here's the proof of concept that we take the uploaded image and then use it.
+        //img.onload = async () => {return};
+
+
+        img.src = fs.readFileSync(`public/images/MG1.jpg`);
+        const mugFace = await net.estimateFaces(createCanvasFromImage());
+        //console.log ( JSON.stringify(mugFace[0].annotations));
+        res.json(mugFace[0].annotations);
+        mugFace[0].annotations.forEach((annotation) => {
+
+        });
+
+
+        img.src = fs.readFileSync('public/images/userPhoto.jpg');
         let face = await net.estimateFaces(createCanvasFromImage());
         res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face});
-
-        //MATH HERE
-        //const mugshots = dal.getAllImages()
-        //for each image, compare face with mugshotData and get its difference
-        //get the image with the smallest difference and then 
-        //res.json({image: element.imageUrl, differenceValue: math})
-        //maybe turn the difference value into a percentage.
-
-
-        // After everything, delete the original image uploaded by the user
+        fs.unlinkSync('public/images/userPhoto.jpg');
     }else{
         res.send('No image uploaded, upload an image by calling /upload first');
     }
 })
 
 function createCanvasFromImage(){
-    const canvas = createCanvas(img.width, img.height);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+    const canvas =  createCanvas(img.width, img.height);
+    const ctx =  canvas.getContext('2d');
+     ctx.drawImage(img, 0, 0, img.width, img.height);
     return canvas;
 }
 

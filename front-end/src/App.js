@@ -52,6 +52,7 @@ function App() {
         console.log(response);
       })
       .catch((error) => {
+        console.log("There was an error");
         console.log(error);
       });
   }
@@ -64,7 +65,7 @@ function App() {
       <div className="photos">
         <div className="photo-box">
           <div className="image-container">
-            <img class='preview-image' id="img-preview" src={imgPreview} alt="Upload your photo" />
+            <img className='preview-image' id="img-preview" src={imgPreview} alt="Upload your photo" />
             <div className="prison-bars"></div>
           </div>
           <form id='image-form' onSubmit={handleSubmit}>
@@ -77,7 +78,7 @@ function App() {
         </div>
         <div className="photo-box">
           <div className="image-container">
-            <img class='preview-image' id='felon-mugshot' src={mugShot} alt="Felon" />
+            <img className='preview-image' id='felon-mugshot' src={mugShot} alt="Felon" />
             <div className="prison-bars"></div>
           </div>
           <h3>Felon Info:</h3>
