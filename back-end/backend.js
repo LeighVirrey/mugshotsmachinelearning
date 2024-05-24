@@ -45,14 +45,6 @@ app.get('/getImage', async (req, res) => {
     if(fs.existsSync('public/images/userPhoto.jpg')){
         //img.onload = async () => {return};
 
-
-        img.src = fs.readFileSync(`public/images/MG1.jpg`);
-        const mugFace = await net.estimateFaces(createCanvasFromImage());
-        mathematics(mugFace);
-        
-
-
-
         img.src = fs.readFileSync('public/images/userPhoto.jpg');
         let face = await net.estimateFaces(createCanvasFromImage());
         res.json({image: 'http://localhost:9696/images/userPhoto.jpg', data: face});
@@ -62,12 +54,46 @@ app.get('/getImage', async (req, res) => {
     }
 })
 
-function mathematics(face){
-    Object.entries(mugFace[0].annotations).forEach((annotation) => {
-        annotation.forEach((point) => {
-            console.log(point);
+function WackMath(face){
+    //console.log(face)
+    console.log("Running Wack Math");
+    let keyNumbers = [];
+    Object.keys(face).forEach((key) => {
+        //console.log(key)
+        let keyArray = [];
+        face[key].forEach((point) => {
+            //console.log(point);
+            let numbersAdded = point[0] + point[1] + point[2];
+            keyArray.push(numbersAdded);
         })
-    });
+        keyNumbers.push(keyArray.reduce((a, b) => a + b, 0) / keyArray.length);
+    })
+    //console.log(keyNumbers);
+    let total = keyNumbers.reduce((a, b) => a + b, 0);
+    console.log(total);
+    //here's this math, takes each point and adds them up, then gets the average in the Key, then adds up the averages from each key.
+}
+
+function attemptMath(face){
+    console.log("Running Attempt Math");
+    let keyNumbers = [];
+    Object.keys(face).forEach((key) => {
+        let keyArray = [];
+        face[key].forEach((point) => {
+            let numbersAdded = point[0] + point[1] + point[2];
+            keyArray.push(numbersAdded);
+        })
+        keyNumbers.push(keyArray.reduce((a, b) => a + b, 0) / keyArray.length);
+    })
+    return keyNumbers;
+}
+
+function comparisonMath(face1, face2){
+    let keyNumbers1 = attemptMath(face1);
+    let keyNumbers2 = attemptMath(face2);
+    let total1 = keyNumbers1.reduce((a, b) => a + b, 0);
+    let total2 = keyNumbers2.reduce((a, b) => a + b, 0);
+    return Math.abs(total1 - total2);
 }
 
 function createCanvasFromImage(){
@@ -81,6 +107,23 @@ app.listen(port, async () => {
     console.log(`Server is running on port ${port}`);
     net = await facemesh.load();
     console.log('Model loaded');
+
+
+    //this is just for math testing, remove this later
+    img.src = fs.readFileSync(`public/images/MG1.jpg`);
+    const mugFace = await net.estimateFaces(createCanvasFromImage());
+    //WackMath(mugFace[0].annotations);
+    //attemptMath(mugFace[0].annotations);
+    //let mugFaceData = attemptMath(mugFace[0].annotations);
+
+    img.src = fs.readFileSync('public/images/userPhoto.jpg');
+    let userFace = await net.estimateFaces(createCanvasFromImage());
+    if(userFace[0].faceInViewConfidence < 0.9 || !userFace[0]){
+        console.log('No face detected');
+    }else{
+        console.log(comparisonMath(mugFace[0].annotations, userFace[0].annotations));
+    }
+    //let userFaceData = attemptMath(userFace[0].annotations);
 })
 
 // stuff to get data from Face Landmarks values
