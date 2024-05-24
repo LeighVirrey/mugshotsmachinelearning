@@ -48,12 +48,9 @@ app.get('/getImage', async (req, res) => {
 
         img.src = fs.readFileSync(`public/images/MG1.jpg`);
         const mugFace = await net.estimateFaces(createCanvasFromImage());
-        //console.log ( JSON.stringify(mugFace[0].annotations));
-        //res.json(mugFace[0].annotations);
-        res.send(mugFace[0].annotations);
-        mugFace[0].annotations.forEach((annotation) => {
+        mathematics(mugFace);
+        
 
-        });
 
 
         img.src = fs.readFileSync('public/images/userPhoto.jpg');
@@ -64,6 +61,14 @@ app.get('/getImage', async (req, res) => {
         res.send('No image uploaded, upload an image by calling /upload first');
     }
 })
+
+function mathematics(face){
+    Object.entries(mugFace[0].annotations).forEach((annotation) => {
+        annotation.forEach((point) => {
+            console.log(point);
+        })
+    });
+}
 
 function createCanvasFromImage(){
     const canvas =  createCanvas(img.width, img.height);
