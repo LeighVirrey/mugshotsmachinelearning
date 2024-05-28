@@ -44,6 +44,7 @@ function App() {
   // This function is called when the user clicks "Find your Felon look-alike"
   function getImage() {
     // This just asks the server for the photo 
+    setMugShot("https://images.squarespace-cdn.com/content/v1/51239e9ae4b0dce195cba126/1556466683303-K5V354MR8E4W0YOOT21G/Question-mark-face.jpg")
     axios.get(imageGetUrl)
       .then((response) => {
         // Use the URL of the photo that is given from the server and display it to the user
