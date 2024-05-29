@@ -48,7 +48,11 @@ function App() {
     axios.get(imageGetUrl)
       .then((response) => {
         // Use the URL of the photo that is given from the server and display it to the user
-        setMugShot(response.data.image);
+        if(response.data.error) {
+          setMugShot(response.data.error);
+        }else{
+          setMugShot(response.data.image);
+        }
         // console.log(mugShot);
         console.log(response);
       })

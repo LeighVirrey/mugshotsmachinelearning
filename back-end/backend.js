@@ -53,7 +53,7 @@ app.get('/getImage', async (req, res) => {
             console.log('math end');
             res.json({image: mostSimilarMugshot});
         }else{
-            res.send('No face detected');
+            res.send({error: 'https://cdn.pixabay.com/photo/2017/02/12/21/29/false-2061132_640.png'});
         }
         fs.unlinkSync('public/images/userPhoto.jpg');
     }else{
