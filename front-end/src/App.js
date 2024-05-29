@@ -6,6 +6,7 @@ function App() {
   const [imgFile, setImgFile] = useState('');
   const [imgPreview, setImgPreview] = useState('');
   const [mugShot, setMugShot] = useState('');
+  const [loading, setLoading] = useState(false)
 
   // This runs every time the user selects an image (but before uploading it)
   const handleFileChange = (event) => {
@@ -44,6 +45,7 @@ function App() {
   // This function is called when the user clicks "Find your Felon look-alike"
   function getImage() {
     // This just asks the server for the photo 
+    setLoading(true)
     setMugShot("https://images.squarespace-cdn.com/content/v1/51239e9ae4b0dce195cba126/1556466683303-K5V354MR8E4W0YOOT21G/Question-mark-face.jpg")
     axios.get(imageGetUrl)
       .then((response) => {
@@ -52,6 +54,7 @@ function App() {
           setMugShot(response.data.error);
         }else{
           setMugShot(response.data.image);
+          setLoading(false)
         }
         // console.log(mugShot);
         console.log(response);
@@ -79,14 +82,20 @@ function App() {
           </form>
         </div>
         <div className="btn-box">
+          
           <button className="btn" onClick={getImage}>Find your Felon look-alike</button>
+          
         </div>
+        <div>{loading && <div className="buffering-circle"></div>}</div>
         <div className="photo-box">
+        
           <div className="image-container">
+          
             <img className='preview-image' id='felon-mugshot' src={mugShot} alt="Felon" />
             <div className="prison-bars"></div>
           </div>
-          <h3>Felon Info:</h3>
+          
+          
         </div>
       </div>
     </div>
